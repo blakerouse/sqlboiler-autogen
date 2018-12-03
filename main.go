@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"sqlboiler-autogen/local"
+	"github.com/blakerouse/sqlboiler-autogen/local"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
