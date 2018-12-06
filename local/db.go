@@ -11,10 +11,11 @@ import (
 // DB provides a local running instance of postgres
 type DB struct {
 	server *pgctl.Server
+	dbName string
 }
 
 // NewDB returns a new local postgresql database.
-func NewDB(dataDir string) *DB {
+func NewDB(dataDir string, dbName string) *DB {
 	// Ensure the environment is correct to find the pg_ctl command.
 	_, set := os.LookupEnv("POSTGRES_HOME")
 	if !set {
@@ -26,6 +27,7 @@ func NewDB(dataDir string) *DB {
 
 	return &DB{
 		server: pgctl.NewServer(dataDir),
+		dbName: dbName,
 	}
 }
 
@@ -39,6 +41,7 @@ func (db *DB) Start() error {
 	options := pgctl.StartOptions{
 		Port:      uint16(port),
 		SocketDir: "",
+		DBName:    db.dbName,
 	}
 
 	if err = db.server.StartOptions(&options); err != nil {
