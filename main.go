@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/lib/pq"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -13,8 +14,6 @@ import (
 
 	"github.com/blakerouse/sqlboiler-autogen/local"
 
-	"github.com/golang-migrate/migrate/v4"
-	"github.com/lib/pq"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -22,6 +21,7 @@ import (
 	"github.com/volatiletech/sqlboiler/drivers"
 	"github.com/volatiletech/sqlboiler/importers"
 
+	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
@@ -119,7 +119,7 @@ func run(cmd *cobra.Command, args []string) error {
 		return errors.Wrap(err, "failed to create temporary directory")
 	}
 	defer os.RemoveAll(tempDir)
-	db := local.NewDB(path.Join(tempDir, "db"), "autogen")
+	db := local.NewDB(path.Join(tempDir, "db"))
 	if err = db.Start(); err != nil {
 		return errors.Wrap(err, "failed to start temporary postgresql")
 	}
