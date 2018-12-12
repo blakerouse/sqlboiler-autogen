@@ -2,6 +2,7 @@ package local
 
 import (
 	"os"
+	"os/exec"
 
 	"github.com/koron-go/pgctl"
 
@@ -15,13 +16,17 @@ type DB struct {
 
 // NewDB returns a new local postgresql database.
 func NewDB(dataDir string) *DB {
-	// Ensure the environment is correct to find the pg_ctl command.
-	_, set := os.LookupEnv("POSTGRES_HOME")
-	if !set {
-		// TODO: Improve this to do a better search of setting up
-		// POSTGRES_HOME paths. At the moment this is hard coded to
-		// Ubuntu Bionic PostgreSQL.
-		os.Setenv("POSTGRES_HOME", "/usr/lib/postgresql/10")
+	// Verify that pg_ctl can be found.
+	_, err := exec.LookPath("pg_ctl")
+	if err != nil {
+		// Ensure the environment is correct to find the pg_ctl command.
+		_, set := os.LookupEnv("POSTGRES_HOME")
+		if !set {
+			// TODO: Improve this to do a better search of setting up
+			// POSTGRES_HOME paths. At the moment this is hard coded to
+			// Ubuntu Bionic PostgreSQL.
+			os.Setenv("POSTGRES_HOME", "/usr/lib/postgresql/10")
+		}
 	}
 
 	return &DB{
