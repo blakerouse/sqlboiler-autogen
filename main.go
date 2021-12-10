@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/lib/pq"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -14,6 +13,7 @@ import (
 
 	"github.com/blakerouse/sqlboiler-autogen/local"
 
+	"github.com/lib/pq"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -195,7 +195,7 @@ func getPsqlDriverConfig(connURL string) (map[string]interface{}, error) {
 	for _, piece := range pieces {
 		parts := strings.Split(piece, "=")
 		if parts[0] == "port" {
-			port, err := strconv.Atoi(parts[1])
+			port, err := strconv.Atoi(strings.Trim(parts[1], "'"))
 			if err != nil {
 				// shouldn't happen
 				panic(err)
