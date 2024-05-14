@@ -25,7 +25,7 @@ func NewDB(dataDir string) *DB {
 			// TODO: Improve this to do a better search of setting up
 			// POSTGRES_HOME paths. At the moment this is hard coded to
 			// Ubuntu Bionic PostgreSQL.
-			os.Setenv("POSTGRES_HOME", "/usr/lib/postgresql/10")
+			os.Setenv("POSTGRES_HOME", "/usr/lib/postgresql/14")
 		}
 	}
 
