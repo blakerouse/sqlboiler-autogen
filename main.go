@@ -3,9 +3,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/blakerouse/sqlboiler-autogen/local"
-	"github.com/golang-migrate/migrate/v4"
-	"github.com/lib/pq"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -15,12 +12,18 @@ import (
 	"strings"
 
 	"github.com/friendsofgo/errors"
+	"github.com/lib/pq"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-
 	"github.com/volatiletech/sqlboiler/v4/boilingcore"
 	"github.com/volatiletech/sqlboiler/v4/drivers"
 	"github.com/volatiletech/sqlboiler/v4/importers"
+
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+
+	"github.com/blakerouse/sqlboiler-autogen/local"
 )
 
 const sqlBoilerVersion = "4.16.2"
