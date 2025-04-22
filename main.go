@@ -3,7 +3,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path"
@@ -178,7 +177,7 @@ func preRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// Create the local database in a temp directory.
-	tempDir, err := ioutil.TempDir(".", ".sqlboiler-autogen-")
+	tempDir, err := os.MkdirTemp(".", ".sqlboiler-autogen-")
 	if err != nil {
 		return errors.Wrap(err, "failed to create temporary directory")
 	}
